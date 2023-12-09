@@ -19,4 +19,6 @@ ModelSense is a powerful tool that allows users to upload their machine learning
 - [Python](https://www.python.org/)
 - [Django](https://www.djangoproject.com/)
 - [React](https://reactjs.org/)
+- [VisualKeras](https://github.com/paulgavrikov/visualkeras)
+- [Keras](https://keras.io/)
 

@@ -6,7 +6,7 @@ import Neuron from "./Neuron";
 
 const RenderedModel = ({ layers, hiddenLayers, nodes }) => {
   const [selectedLayerIndex, setSelectedLayerIndex] = useState(null);
-  const spacing = 0.75;
+  const spacing = 1;
   const totalWidth = layers * spacing;
   const sphereRadius = 0.2;
 
@@ -52,7 +52,9 @@ const RenderedModel = ({ layers, hiddenLayers, nodes }) => {
       {nodes.map((nodeCount, layerIndex) => {
         const xPos = layerIndex * spacing; // Position layers horizontally
         const layerXPos = layerIndex * spacing;
-        const groupXPos = layerIndex * spacing; // X position for the entire group of layer + neurons
+        const maxNeuronsPerRow = 9;
+        const neuronYSpacing = 0.5;
+        const neuronZSpacing = 0.5;
 
         return (
           <group
@@ -68,11 +70,14 @@ const RenderedModel = ({ layers, hiddenLayers, nodes }) => {
             />
 
             {Array.from({ length: nodeCount }).map((_, nodeIndex) => {
+              const rowNumber = Math.floor(nodeIndex / maxNeuronsPerRow);
+              const columnNumber = nodeIndex % maxNeuronsPerRow;
               const neuronXPos = layerXPos + 0.1 + sphereRadius;
-              const neuronZSpacing = 0.5;
               const neuronStartZPos = 2.0;
-              const neuronZPos = neuronStartZPos - nodeIndex * neuronZSpacing;
-              const neuronYPos = 2.0;
+              const neuronZPos =
+                neuronStartZPos - columnNumber * neuronZSpacing;
+              const neuronStartYPos = 2.0;
+              const neuronYPos = neuronStartYPos - rowNumber * neuronYSpacing;
 
               return (
                 <Neuron

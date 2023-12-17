@@ -19,15 +19,6 @@ const Neuron = ({
           shininess={30}
         />
       </Sphere>
-      <Text
-        position={[xPos, yPos + sphereRadius, zPos]}
-        fontSize={0.1}
-        color="#ffffff"
-        textAlign="center"
-        anchorY="middle"
-      >
-        {nodeId.toString()}
-      </Text>
     </React.Fragment>
   );
 };

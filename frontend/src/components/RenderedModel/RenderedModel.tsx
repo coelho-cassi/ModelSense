@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Layer from "./Layer";
 import Neuron from "./Neuron";
 
-const RenderedModel: React.FC<{
-  layers: number;
-  hiddenLayers: number;
-  nodes: number[];
-  //top3: number[][];
-}> = ({ layers, hiddenLayers, nodes }) => {
+const RenderedModel = ({ layers, hiddenLayers, nodes }) => {
+  const [selectedLayerIndex, setSelectedLayerIndex] = useState(null);
   const spacing = 0.75;
   const totalWidth = layers * spacing;
-  const sphereRadius = 0.2; // Smaller radius for the spheres
+  const sphereRadius = 0.2;
+
+  // Function to handle clicking on a layer
+  const handleLayerClick = (layerIndex) => {
+    setSelectedLayerIndex((prevSelectedLayerIndex) =>
+      prevSelectedLayerIndex === layerIndex ? null : layerIndex
+    );
+  };
+
+  // Function to calculate the rotation for each layer
+  const calculateLayerRotationY = (layerIndex) => {
+    if (selectedLayerIndex === null) return 0; // No layer selected, no rotation
+    if (layerIndex < selectedLayerIndex) return -Math.PI / 6; // Rotate previous layers to the left
+    if (layerIndex > selectedLayerIndex) return Math.PI / 6; // Rotate next layers to the right
+    return 0; // Selected layer does not rotate
+  };
 
   // Function to determine color for Slim3DSquares based on layer index
   const getColorForLayer = (layerIndex: number) => {
@@ -41,9 +52,15 @@ const RenderedModel: React.FC<{
       {nodes.map((nodeCount, layerIndex) => {
         const xPos = layerIndex * spacing; // Position layers horizontally
         const layerXPos = layerIndex * spacing;
+        const groupXPos = layerIndex * spacing; // X position for the entire group of layer + neurons
 
         return (
-          <React.Fragment key={layerIndex}>
+          <group
+            key={layerIndex}
+            position={[xPos, 0, 0]}
+            rotation={[0, calculateLayerRotationY(layerIndex), 0]}
+            onClick={() => handleLayerClick(layerIndex)}
+          >
             <Layer
               xPos={xPos}
               layerIndex={layerIndex}
@@ -68,7 +85,7 @@ const RenderedModel: React.FC<{
                 />
               );
             })}
-          </React.Fragment>
+          </group>
         );
       })}
 

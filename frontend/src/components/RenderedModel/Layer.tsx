@@ -1,4 +1,3 @@
-// Layer.js
 import React from "react";
 import { RoundedBox } from "@react-three/drei";
 

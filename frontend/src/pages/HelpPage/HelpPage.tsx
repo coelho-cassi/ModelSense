@@ -18,7 +18,7 @@ const HelpPage = () => {
         <RenderedModel
           layers={6}
           hiddenLayers={4}
-          nodes={[3, 6, 4, 6, 4, 1]}
+          nodes={[3, 6, 4, 9, 4, 1]}
         ></RenderedModel>
       </div>
     </div>

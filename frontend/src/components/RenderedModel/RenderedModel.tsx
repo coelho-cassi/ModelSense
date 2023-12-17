@@ -8,12 +8,11 @@ const RenderedModel: React.FC<{
   layers: number;
   hiddenLayers: number;
   nodes: number[];
-  top3: number[][];
-}> = ({ layers, hiddenLayers, nodes, top3 }) => {
+  //top3: number[][];
+}> = ({ layers, hiddenLayers, nodes }) => {
   const spacing = 0.75;
   const totalWidth = layers * spacing;
-  const sphereRadius = 0.1; // Smaller radius for the spheres
-  const sphereColor = "#98FB98"; // Uniform color for all spheres
+  const sphereRadius = 0.2; // Smaller radius for the spheres
 
   // Function to determine color for Slim3DSquares based on layer index
   const getColorForLayer = (layerIndex: number) => {
@@ -24,9 +23,6 @@ const RenderedModel: React.FC<{
 
   // Function to determine color for Spheres
   const getColorForSphere = (layerIndex: number, nodeIndex: number) => {
-    if (layerIndex < hiddenLayers && top3[layerIndex].includes(nodeIndex)) {
-      return "#98FB98"; // Highlight color for top nodes
-    }
     return "#98FB98"; // Regular color
   };
 
@@ -43,11 +39,8 @@ const RenderedModel: React.FC<{
 
       {/* Render Layers in reverse order */}
       {nodes.map((nodeCount, layerIndex) => {
-        const yPos = (layers - 1 - layerIndex) * spacing;
         const xPos = layerIndex * spacing; // Position layers horizontally
-
-        // Determine if the layer is hidden
-        const isHiddenLayer = layerIndex > 0 && layerIndex < layers - 1;
+        const layerXPos = layerIndex * spacing;
 
         return (
           <React.Fragment key={layerIndex}>
@@ -57,30 +50,24 @@ const RenderedModel: React.FC<{
               getColorForLayer={getColorForLayer}
             />
 
-            {/* Conditionally render Neurons for this Layer */}
-            {isHiddenLayer
-              ? top3[layerIndex - 1].map((nodeId, nodeIndex) => (
-                  <Neuron
-                    key={nodeId}
-                    nodeId={nodeId}
-                    nodeIndex={nodeIndex}
-                    yPos={yPos}
-                    sphereRadius={sphereRadius}
-                    getColorForSphere={getColorForSphere}
-                    layerIndex={layerIndex}
-                  />
-                ))
-              : Array.from({ length: nodeCount }).map((_, nodeIndex) => (
-                  <Neuron
-                    key={nodeIndex}
-                    nodeId={nodeIndex}
-                    nodeIndex={nodeIndex}
-                    yPos={yPos}
-                    sphereRadius={sphereRadius}
-                    getColorForSphere={getColorForSphere}
-                    layerIndex={layerIndex}
-                  />
-                ))}
+            {Array.from({ length: nodeCount }).map((_, nodeIndex) => {
+              const neuronYPos = 2.3 - (nodeIndex + 0.5) * sphereRadius * 2;
+              const neuronZPos = 2;
+              const neuronXPos = layerXPos + 0.1 + sphereRadius;
+
+              return (
+                <Neuron
+                  key={nodeIndex}
+                  nodeId={nodeIndex}
+                  xPos={neuronXPos}
+                  yPos={neuronYPos}
+                  zPos={neuronZPos}
+                  sphereRadius={sphereRadius}
+                  getColorForSphere={getColorForSphere}
+                  layerIndex={layerIndex}
+                />
+              );
+            })}
           </React.Fragment>
         );
       })}
@@ -89,4 +76,5 @@ const RenderedModel: React.FC<{
     </Canvas>
   );
 };
+
 export default RenderedModel;

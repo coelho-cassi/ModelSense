@@ -14,17 +14,11 @@ const HelpPage = () => {
       </div>
 
       {/* RenderedModel - Centered */}
-      <div className="z-10">
+      <div className="absolute right-1/3 bottom-1/3">
         <RenderedModel
           layers={6}
           hiddenLayers={4}
           nodes={[3, 6, 4, 6, 4, 1]}
-          top3={[
-            [5, 2, 1],
-            [2, 4, 1],
-            [2, 4, 1],
-            [2, 4, 1],
-          ]}
         ></RenderedModel>
       </div>
     </div>

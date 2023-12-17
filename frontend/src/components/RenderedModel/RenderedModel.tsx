@@ -68,9 +68,11 @@ const RenderedModel = ({ layers, hiddenLayers, nodes }) => {
             />
 
             {Array.from({ length: nodeCount }).map((_, nodeIndex) => {
-              const neuronYPos = 2.3 - (nodeIndex + 0.5) * sphereRadius * 2;
-              const neuronZPos = 2;
               const neuronXPos = layerXPos + 0.1 + sphereRadius;
+              const neuronZSpacing = 0.5;
+              const neuronStartZPos = 2.0;
+              const neuronZPos = neuronStartZPos - nodeIndex * neuronZSpacing;
+              const neuronYPos = 2.0;
 
               return (
                 <Neuron

@@ -6,6 +6,7 @@ import {
   ViewingWindow,
   InsightsWindow,
   BotBgWindow,
+  DynamicScene,
 } from "../../components";
 import graphic2 from "../../assets/graphic2.png";
 
@@ -19,7 +20,6 @@ const VisualizationPage = () => {
       <div className="absolute top-0 left-0 p-1">
         <Menu></Menu>
       </div>
-
       {/* TopBgWindow Container */}
       <div className="absolute top-16 mt-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-1 mr-16">
         <TopBgWindow></TopBgWindow>

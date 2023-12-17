@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "../../components";
+import { Menu, RenderedModel } from "../../components";
 import graphic1 from "../../assets/graphic1.png";
 
 const HelpPage = () => {
@@ -11,6 +11,21 @@ const HelpPage = () => {
       {/* Menu Container */}
       <div className="absolute top-0 left-0 p-1">
         <Menu></Menu>
+      </div>
+
+      {/* RenderedModel - Centered */}
+      <div className="z-10">
+        <RenderedModel
+          layers={6}
+          hiddenLayers={4}
+          nodes={[3, 6, 4, 6, 4, 1]}
+          top3={[
+            [5, 2, 1],
+            [2, 4, 1],
+            [2, 4, 1],
+            [2, 4, 1],
+          ]}
+        ></RenderedModel>
       </div>
     </div>
   );

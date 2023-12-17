@@ -10,8 +10,8 @@ const RenderedModel: React.FC<{
   nodes: number[];
   top3: number[][];
 }> = ({ layers, hiddenLayers, nodes, top3 }) => {
-  const spacing = 0.5;
-  const totalHeight = layers * spacing;
+  const spacing = 0.75;
+  const totalWidth = layers * spacing;
   const sphereRadius = 0.1; // Smaller radius for the spheres
   const sphereColor = "#98FB98"; // Uniform color for all spheres
 
@@ -34,8 +34,8 @@ const RenderedModel: React.FC<{
     <Canvas
       style={{ width: "100vw", height: "100vh" }}
       camera={{
-        position: [5, (layers * spacing) / 2, 15 + layers * spacing],
-        fov: 25,
+        position: [totalWidth / 2, 0, totalWidth * 2], // Side view, adjust z for distance from layers
+        fov: 100,
       }}
     >
       <ambientLight intensity={0.5} />
@@ -44,6 +44,7 @@ const RenderedModel: React.FC<{
       {/* Render Layers in reverse order */}
       {nodes.map((nodeCount, layerIndex) => {
         const yPos = (layers - 1 - layerIndex) * spacing;
+        const xPos = layerIndex * spacing; // Position layers horizontally
 
         // Determine if the layer is hidden
         const isHiddenLayer = layerIndex > 0 && layerIndex < layers - 1;
@@ -51,7 +52,7 @@ const RenderedModel: React.FC<{
         return (
           <React.Fragment key={layerIndex}>
             <Layer
-              yPos={yPos}
+              xPos={xPos}
               layerIndex={layerIndex}
               getColorForLayer={getColorForLayer}
             />

@@ -21,5 +21,6 @@ ModelSense is a powerful tool that allows users to upload their machine learning
 - [React](https://reactjs.org/)
 - [Three.js](https://threejs.org/)
 - [Three.js / Drei](https://github.com/pmndrs/drei)
+- [Three.js / Fiber](https://github.com/acdlite/react-fiber-architecture)
 
 

@@ -16,6 +16,7 @@ export { default as TopBgWindow } from "./ViewingWindows/TopBgWindow";
 export { default as ViewingWindow } from "./ViewingWindows/ViewingWindow";
 export { default as InsightsWindow } from "./ViewingWindows/InsightsWindow";
 export { default as BotBgWindow } from "./ViewingWindows/BotBgWindow";
+export { default as GraphViewingWindow } from "./ViewingWindows/GraphViewingWindow";
 
 //Neural Network Scene
 export { default as DynamicScene } from "./DynamicScene/DynamicScene";

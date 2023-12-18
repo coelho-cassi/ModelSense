@@ -9,10 +9,10 @@ const Layer = ({ xPos, layerIndex, getColorForLayer }) => {
       position={[xPos, 0, 0]}
       rotation={[0, Math.PI / 2, 0]}
     >
-      <meshPhongMaterial
+      <meshPhysicalMaterial
         color={getColorForLayer(layerIndex)}
-        specular="#555555"
-        shininess={30}
+        roughness={0.3}
+        metalness={0.7}
       />
     </RoundedBox>
   );

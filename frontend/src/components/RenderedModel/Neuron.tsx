@@ -13,10 +13,11 @@ const Neuron = ({
   return (
     <React.Fragment>
       <Sphere args={[sphereRadius, 32, 32]} position={[xPos, yPos, zPos]}>
-        <meshPhongMaterial
+        <meshStandardMaterial
           color={getColorForSphere(layerIndex, nodeId)}
-          specular="#555555"
-          shininess={30}
+          roughness={0.3}
+          metalness={0.7}
+          //clearcoat={5}
         />
       </Sphere>
     </React.Fragment>

@@ -6,7 +6,7 @@ import Neuron from "./Neuron";
 
 const RenderedModel = ({ layers, hiddenLayers, nodes }) => {
   const [selectedLayerIndex, setSelectedLayerIndex] = useState(null);
-  const spacing = 1;
+  const spacing = 0.75;
   const totalWidth = layers * spacing;
   const sphereRadius = 0.2;
 
@@ -39,14 +39,17 @@ const RenderedModel = ({ layers, hiddenLayers, nodes }) => {
 
   return (
     <Canvas
-      style={{ width: "100vw", height: "100vh" }}
+      style={{ width: "50vw", height: "50vh" }}
       camera={{
-        position: [totalWidth / 2, 0, totalWidth * 2], // Side view, adjust z for distance from layers
-        fov: 100,
+        position: [totalWidth / 2, 0, totalWidth * 3.5], // Side view, adjust z for distance from layers
+        fov: 50,
       }}
     >
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} intensity={1} />
+      <ambientLight intensity={1} />
+      <directionalLight
+        position={[0, 10, 10]} // Adjust position as needed
+        intensity={1} // Adjust intensity as needed
+      />
 
       {/* Render Layers in reverse order */}
       {nodes.map((nodeCount, layerIndex) => {

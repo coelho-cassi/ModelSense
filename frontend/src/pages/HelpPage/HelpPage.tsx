@@ -14,7 +14,7 @@ const HelpPage = () => {
       </div>
 
       {/* RenderedModel - Centered */}
-      <div className="absolute right-1/3 bottom-1/3">
+      <div className="absolute right-1/3">
         <RenderedModel
           layers={6}
           hiddenLayers={4}

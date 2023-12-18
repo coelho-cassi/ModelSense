@@ -42,7 +42,7 @@ const RenderedModel = ({ layers, hiddenLayers, nodes }) => {
       style={{ width: "50vw", height: "50vh" }}
       camera={{
         position: [totalWidth / 2, 0, totalWidth * 3.5], // Side view, adjust z for distance from layers
-        fov: 50,
+        fov: 75,
       }}
     >
       <ambientLight intensity={1} />
@@ -68,6 +68,7 @@ const RenderedModel = ({ layers, hiddenLayers, nodes }) => {
           >
             <Layer
               xPos={xPos}
+              nodeCount={nodeCount}
               layerIndex={layerIndex}
               getColorForLayer={getColorForLayer}
             />

@@ -6,11 +6,18 @@ import {
   ViewingWindow,
   InsightsWindow,
   BotBgWindow,
-  DynamicScene,
+  GraphViewingWindow,
 } from "../../components";
 import graphic2 from "../../assets/graphic2.png";
 
 const VisualizationPage = () => {
+  // Define your neural network structure
+  const neuralNetworkProps = {
+    layers: 6,
+    hiddenLayers: 4,
+    nodes: [3, 6, 4, 10, 4, 1],
+  };
+
   return (
     <div className="relative bg-primary_bg min-h-screen overflow-hidden">
       {/* Background Graphic */}
@@ -28,9 +35,9 @@ const VisualizationPage = () => {
           <UploadButtonSm></UploadButtonSm>
         </div>
       </div>
-      {/* ViewingWindow Container */}
-      <div className="absolute top-52 right-1/2 ">
-        <ViewingWindow></ViewingWindow>
+      {/* GraphViewingWindow Container */}
+      <div className="absolute top-52 right-1/2">
+        <GraphViewingWindow {...neuralNetworkProps} />
       </div>
       {/* InisightsWindow Container */}
       <div className="absolute top-52 left-1/2 ml-5">

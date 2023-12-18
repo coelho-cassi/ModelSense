@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import RenderedModel from "../RenderedModel/RenderedModel";
 
 interface ViewingWindowProps {
   className?: string;

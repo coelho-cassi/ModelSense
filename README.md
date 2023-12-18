@@ -23,4 +23,6 @@ ModelSense is a powerful tool that allows users to upload their machine learning
 - [Three.js / Drei](https://github.com/pmndrs/drei)
 - [Three.js / Fiber](https://docs.pmnd.rs/react-three-fiber)
 
+## Current Support
 
+- **Neuron Max:** No more than 207 neurons per layer

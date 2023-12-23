@@ -12,15 +12,6 @@ const HelpPage = () => {
       <div className="absolute top-0 left-0 p-1">
         <Menu></Menu>
       </div>
-
-      {/* RenderedModel - Centered */}
-      <div className="absolute right-1/3">
-        <RenderedModel
-          layers={6}
-          hiddenLayers={4}
-          nodes={[3, 6, 4, 10, 4, 1]}
-        ></RenderedModel>
-      </div>
     </div>
   );
 };

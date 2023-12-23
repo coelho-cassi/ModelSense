@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Menu,
   TopBgWindow,
   UploadButtonSm,
-  ViewingWindow,
   InsightsWindow,
   BotBgWindow,
   GraphViewingWindow,
@@ -11,11 +10,71 @@ import {
 import graphic2 from "../../assets/graphic2.png";
 
 const VisualizationPage = () => {
-  // Define your neural network structure
+  const [layers, setLayers] = useState<number | 0>(0);
+  const [hiddenLayers, setHiddenLayers] = useState<number | 0>(0);
+  const [nodes, setNodes] = useState<number[]>([]);
+  const [layerTypes, setLayerTypes] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [neuronGlowInfo, setNeuronGlowInfo] = useState<{
+    [key: string]: number[];
+  }>({});
+  const [error, setError] = useState<string | null>(null);
+
+  const checkGraphStatus = async () => {
+    console.log("Checking graph status...");
+    try {
+      const response = await fetch(
+        "http://localhost:8000/playground/model_to_graph"
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Data fetched:", data);
+
+        // Check if data is valid before updating states and loading
+        if (
+          data.results.layers > 0 ||
+          data.results.hiddenLayers > 0 ||
+          data.results.nodes.length > 0
+        ) {
+          setLayers(data.results.layers);
+          setHiddenLayers(data.results.hiddenLayers);
+          setNodes(data.results.nodes);
+          setLayerTypes(data.results.layerTypes);
+          setNeuronGlowInfo(data.results.neuronGlowInfo);
+          setLoading(false); // Set loading to false only if data is valid
+        }
+      } else {
+        throw new Error(`API responded with status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+  console.log("Visualization Props:", {
+    layers,
+    hiddenLayers,
+    nodes,
+    layerTypes,
+    neuronGlowInfo,
+  }); // Debugging line
+
+  // Single useEffect for polling
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (loading) {
+        checkGraphStatus();
+      }
+    }, 2000); // Adjust the interval time as needed
+
+    return () => clearInterval(interval);
+  }, [loading]); // Dependency array with only 'loading'
+
   const neuralNetworkProps = {
-    layers: 6,
-    hiddenLayers: 4,
-    nodes: [3, 6, 4, 10, 4, 1],
+    layers,
+    hiddenLayers,
+    nodes,
+    layerTypes,
+    neuronGlowInfo,
   };
 
   return (
@@ -37,7 +96,11 @@ const VisualizationPage = () => {
       </div>
       {/* GraphViewingWindow Container */}
       <div className="absolute top-52 right-1/2">
-        <GraphViewingWindow {...neuralNetworkProps} />
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <GraphViewingWindow {...neuralNetworkProps} />
+        )}
       </div>
       {/* InisightsWindow Container */}
       <div className="absolute top-52 left-1/2 ml-5">

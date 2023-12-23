@@ -6,6 +6,8 @@ interface GraphViewingWindowProps {
   layers: number;
   hiddenLayers: number;
   nodes: number[];
+  layerTypes: string[];
+  neuronGlowInfo: { [key: string]: number[] };
 }
 
 const GraphViewingWindow: React.FC<GraphViewingWindowProps> = ({
@@ -13,7 +15,10 @@ const GraphViewingWindow: React.FC<GraphViewingWindowProps> = ({
   layers,
   hiddenLayers,
   nodes,
+  layerTypes,
+  neuronGlowInfo,
 }) => {
+  console.log("GraphViewingWindow Props:", { layers, hiddenLayers, nodes }); // Debugging line
   return (
     <div className={`relative w-100 h-128 ${className}`}>
       {/* White Rectangle (Bottom) */}
@@ -25,6 +30,8 @@ const GraphViewingWindow: React.FC<GraphViewingWindowProps> = ({
           layers={layers}
           hiddenLayers={hiddenLayers}
           nodes={nodes}
+          layerTypes={layerTypes}
+          neuronGlowInfo={neuronGlowInfo}
         />
       </div>
     </div>

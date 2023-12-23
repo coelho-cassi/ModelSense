@@ -18,6 +18,8 @@ const UploadButtonLg: React.FC<UploadButtonLgProps> = ({ className }) => {
       setSelectedFile(file);
 
       try {
+        // Redirect to "/visualization"
+        navigate("/visualization");
         const formData = new FormData();
         formData.append("model", file);
 
@@ -36,7 +38,7 @@ const UploadButtonLg: React.FC<UploadButtonLgProps> = ({ className }) => {
         console.log("File uploaded successfully", response.data);
 
         // Redirect to "/visualization"
-        navigate("/visualization");
+        //navigate("/visualization");
       } catch (error) {
         console.error("Error uploading file", error);
       }

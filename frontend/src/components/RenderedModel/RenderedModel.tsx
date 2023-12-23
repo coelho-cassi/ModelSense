@@ -4,11 +4,31 @@ import { OrbitControls } from "@react-three/drei";
 import Layer from "./Layer";
 import Neuron from "./Neuron";
 
-const RenderedModel = ({ layers, hiddenLayers, nodes }) => {
+const RenderedModel = ({
+  layers,
+  hiddenLayers,
+  nodes,
+  layerTypes,
+  neuronGlowInfo,
+}) => {
+  console.log("neuronGlowInfo:", neuronGlowInfo);
   const [selectedLayerIndex, setSelectedLayerIndex] = useState(null);
   const spacing = 0.75;
-  const totalWidth = layers * spacing;
   const sphereRadius = 0.2;
+
+  const middleLayerX = ((layers - 1) * spacing) / 2;
+
+  const offsetToCenter = -middleLayerX;
+
+  // Function to determine if a neuron should glow
+  const isGlowing = (layerIndex, nodeId) => {
+    const glowLayerKey = `${layerIndex}`;
+    const glowing =
+      neuronGlowInfo[glowLayerKey] &&
+      neuronGlowInfo[glowLayerKey].includes(nodeId);
+    console.log(`Neuron ${nodeId} (Layer ${layerIndex}): Glowing = ${glowing}`);
+    return glowing;
+  };
 
   // Function to handle clicking on a layer
   const handleLayerClick = (layerIndex) => {
@@ -26,10 +46,21 @@ const RenderedModel = ({ layers, hiddenLayers, nodes }) => {
   };
 
   // Function to determine color for Slim3DSquares based on layer index
-  const getColorForLayer = (layerIndex: number) => {
-    if (layerIndex === 0) return "#E0B0FF"; // Blue for input layer
-    if (layerIndex === layers - 1) return "#FF4500"; // Green for output layer
-    return "#FFD700"; // White for hidden layers
+  const getColorForLayer = (layerIndex: number, layerTypes: string[]) => {
+    const layerType = layerTypes[layerIndex];
+
+    switch (layerType) {
+      case "Conv2D":
+        return "#1E90FF"; // Blue for Conv2D layers
+      case "AveragePooling2D":
+        return "#32CD32"; // Green for AveragePooling2D layers
+      case "Flatten":
+        return "#FFD700"; // Golden for Flatten layers
+      case "Dense":
+        return "#FF69B4"; // Pink for Dense layers
+      default:
+        return "#808080"; // Grey for any other layer types
+    }
   };
 
   // Function to determine color for Spheres
@@ -39,68 +70,66 @@ const RenderedModel = ({ layers, hiddenLayers, nodes }) => {
 
   return (
     <Canvas
-      style={{ width: "50vw", height: "50vh" }}
-      camera={{
-        position: [totalWidth / 2, 0, totalWidth * 3.5], // Side view, adjust z for distance from layers
-        fov: 75,
-      }}
+      style={{ width: "100%", height: "100%" }}
+      camera={{ position: [0, 0, layers * 1.5], fov: 75 }}
     >
       <ambientLight intensity={1} />
-      <directionalLight
-        position={[0, 10, 10]} // Adjust position as needed
-        intensity={1} // Adjust intensity as needed
-      />
+      <directionalLight position={[0, 10, 10]} intensity={1} />
 
-      {/* Render Layers in reverse order */}
-      {nodes.map((nodeCount, layerIndex) => {
-        const xPos = layerIndex * spacing; // Position layers horizontally
-        const layerXPos = layerIndex * spacing;
-        const maxNeuronsPerRow = 9;
-        const neuronYSpacing = 0.5;
-        const neuronZSpacing = 0.5;
+      <group position={[offsetToCenter, 0, 0]}>
+        {nodes.map((nodeCount, layerIndex) => {
+          const xPos = layerIndex * spacing;
+          const layerXPos = layerIndex * spacing;
+          const maxNeuronsPerRow = 9;
+          const neuronYSpacing = 0.5;
+          const neuronZSpacing = 0.5;
 
-        return (
-          <group
-            key={layerIndex}
-            position={[xPos, 0, 0]}
-            rotation={[0, calculateLayerRotationY(layerIndex), 0]}
-            onClick={() => handleLayerClick(layerIndex)}
-          >
-            <Layer
-              xPos={xPos}
-              nodeCount={nodeCount}
-              layerIndex={layerIndex}
-              getColorForLayer={getColorForLayer}
-            />
+          return (
+            <group
+              key={layerIndex}
+              position={[xPos, 0, 0]}
+              rotation={[0, calculateLayerRotationY(layerIndex), 0]}
+              onClick={() => handleLayerClick(layerIndex)}
+            >
+              <Layer
+                xPos={xPos}
+                nodeCount={nodeCount}
+                layerIndex={layerIndex}
+                getColorForLayer={() =>
+                  getColorForLayer(layerIndex, layerTypes)
+                }
+              />
 
-            {Array.from({ length: nodeCount }).map((_, nodeIndex) => {
-              const rowNumber = Math.floor(nodeIndex / maxNeuronsPerRow);
-              const columnNumber = nodeIndex % maxNeuronsPerRow;
-              const neuronXPos = layerXPos + 0.1 + sphereRadius;
-              const neuronStartZPos = 2.0;
-              const neuronZPos =
-                neuronStartZPos - columnNumber * neuronZSpacing;
-              const neuronStartYPos = 2.0;
-              const neuronYPos = neuronStartYPos - rowNumber * neuronYSpacing;
+              {Array.from({ length: nodeCount }).map((_, nodeIndex) => {
+                const rowNumber = Math.floor(nodeIndex / maxNeuronsPerRow);
+                const columnNumber = nodeIndex % maxNeuronsPerRow;
+                const neuronXPos = layerXPos + 0.1 + sphereRadius;
+                const neuronStartZPos = 2.0;
+                const neuronZPos =
+                  neuronStartZPos - columnNumber * neuronZSpacing;
+                const neuronStartYPos = 2.0;
+                const neuronYPos = neuronStartYPos - rowNumber * neuronYSpacing;
 
-              return (
-                <Neuron
-                  key={nodeIndex}
-                  nodeId={nodeIndex}
-                  xPos={neuronXPos}
-                  yPos={neuronYPos}
-                  zPos={neuronZPos}
-                  sphereRadius={sphereRadius}
-                  getColorForSphere={getColorForSphere}
-                  layerIndex={layerIndex}
-                />
-              );
-            })}
-          </group>
-        );
-      })}
+                return (
+                  <Neuron
+                    key={nodeIndex}
+                    nodeId={nodeIndex}
+                    xPos={neuronXPos}
+                    yPos={neuronYPos}
+                    zPos={neuronZPos}
+                    sphereRadius={sphereRadius}
+                    getColorForSphere={getColorForSphere}
+                    layerIndex={layerIndex}
+                    glowing={isGlowing(layerIndex, nodeIndex)}
+                  />
+                );
+              })}
+            </group>
+          );
+        })}
+      </group>
 
-      <OrbitControls />
+      <OrbitControls enableDamping dampingFactor={0.1} />
     </Canvas>
   );
 };

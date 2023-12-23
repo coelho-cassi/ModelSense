@@ -6,7 +6,7 @@ from django.views import View
 from django.conf import settings
 import os
 
-from subprocess import call
+from subprocess import Popen
 
 @method_decorator(csrf_exempt, name='dispatch')
 class UploadModelView(View):
@@ -34,7 +34,7 @@ class UploadModelView(View):
                 print("Location (loc):", loc)
                 print("Python Executable Path:", python_executable_path)
 
-                call([python_executable_path, "gen_png.py"], cwd=loc)
+                Popen([python_executable_path, "get_graph_data.py"], cwd=loc)
 
                 return JsonResponse({'message': 'Model uploaded successfully'})
             return JsonResponse({'message': 'Model upload failed'})

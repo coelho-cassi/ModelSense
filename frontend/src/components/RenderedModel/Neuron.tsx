@@ -9,15 +9,22 @@ const Neuron = ({
   sphereRadius,
   getColorForSphere,
   layerIndex,
+  glowing,
 }) => {
+  // Log the glowing status for debugging
+  console.log(`Neuron ${nodeId} (Layer ${layerIndex}): Glowing = ${glowing}`);
+  // Adjust the color or intensity based on the glowing status
+  const color = glowing ? "#98FB98" : getColorForSphere(layerIndex, nodeId); // Example: Yellow for glowing
+
   return (
     <React.Fragment>
-      <Sphere args={[sphereRadius, 32, 32]} position={[xPos, yPos, zPos]}>
+      <Sphere args={[sphereRadius, 16, 16]} position={[xPos, yPos, zPos]}>
         <meshStandardMaterial
           color={getColorForSphere(layerIndex, nodeId)}
           roughness={0.3}
           metalness={0.7}
-          //clearcoat={5}
+          emissive={glowing ? color : null}
+          emissiveIntensity={glowing ? 0.5 : 0}
         />
       </Sphere>
     </React.Fragment>

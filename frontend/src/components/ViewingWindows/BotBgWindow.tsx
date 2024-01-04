@@ -1,3 +1,8 @@
+/* BotBgWindow.tsx
+   Integrates RadioButton instances and provides a user 
+   interface for selecting different types of insights.
+*/
+
 import React from "react";
 import { RadioButton } from "../../components";
 

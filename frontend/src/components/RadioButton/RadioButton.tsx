@@ -1,3 +1,6 @@
+/* RadioButton.tsx
+   Reusable radio button component
+*/
 import React from "react";
 
 interface RadioButtonProps {

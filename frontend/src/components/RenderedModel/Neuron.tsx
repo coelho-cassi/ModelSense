@@ -1,3 +1,6 @@
+/* Neuron.tsx
+   Used within RenderedModel, is responsible for visualizing individual neurons of the neural network in 3D.
+*/
 import React from "react";
 import { Sphere, Text } from "@react-three/drei";
 

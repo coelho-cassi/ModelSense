@@ -1,3 +1,7 @@
+/* GraphViewingWindow.tsx
+ Acts as a container for the RenderedModel component. 
+ It passes neural network-related props to RenderedModel.
+*/
 import React from "react";
 import RenderedModel from "../RenderedModel/RenderedModel";
 

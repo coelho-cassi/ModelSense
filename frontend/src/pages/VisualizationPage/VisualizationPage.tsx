@@ -1,3 +1,9 @@
+/* VisualizationPage.tsx
+Manages state for various aspects of the neural network visualization 
+(like layers, nodes, and neuron glow information) and handles data 
+fetching from the backend. It also organizes sub-components on the page.
+*/
+
 import React, { useState, useEffect } from "react";
 import {
   Menu,

@@ -1,3 +1,7 @@
+/* InsightsWindow.tsx
+   Acts as a container for the data resulting from selecting 
+   any one of the radiobuttons 
+*/
 import React from "react";
 
 interface InsightsWindowProps {

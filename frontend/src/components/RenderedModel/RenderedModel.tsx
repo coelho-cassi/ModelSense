@@ -1,3 +1,9 @@
+/* RenderedModel.tsx
+   Renders the 3D visualization of the neural network using React Three Fiber. 
+   It includes logic for calculating positions and properties of layers and neurons, 
+   as well as interactivity (like layer selection and neuron glowing)
+*/
+
 import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";

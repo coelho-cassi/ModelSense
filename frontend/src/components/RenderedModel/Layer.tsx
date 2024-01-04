@@ -1,3 +1,7 @@
+/* Layer.tsx
+   Used within RenderedModel, is responsible for visualizing individual layers of the neural network in 3D.
+*/
+
 import React from "react";
 import { RoundedBox } from "@react-three/drei";
 

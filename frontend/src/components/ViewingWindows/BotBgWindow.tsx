@@ -8,9 +8,14 @@ import { RadioButton } from "../../components";
 
 interface BotBgWindowProps {
   className?: string;
+  onInsightSelect: (value: string) => void;
 }
 
-const BotBgWindow: React.FC<BotBgWindowProps> = ({ className }) => {
+const BotBgWindow: React.FC<BotBgWindowProps> = ({
+  className,
+  onInsightSelect,
+}) => {
+  // When a radio button is clicked, call onInsightSelect with the corresponding value
   return (
     <div className="relative w-156 h-32">
       {/* White Rectangle (Bottom) */}
@@ -19,10 +24,30 @@ const BotBgWindow: React.FC<BotBgWindowProps> = ({ className }) => {
       {/* Blue Rectangle (Top) */}
       <div className="absolute inset-0 bg-third_bg rounded-lg m-6">
         <div className="flex justify-between px-6 mt-6">
-          <RadioButton label="LIME Insights" id="lime" name="category" />
-          <RadioButton label="SHAP Insights" id="shape" name="category" />
-          <RadioButton label="Layer Insights" id="layer" name="category" />
-          <RadioButton label="Neuron Insights" id="neuron" name="category" />
+          <RadioButton
+            label="LIME Insights"
+            id="lime"
+            name="category"
+            onChange={() => onInsightSelect("LIME Insights")}
+          />
+          <RadioButton
+            label="SHAP Insights"
+            id="shape"
+            name="category"
+            onChange={() => onInsightSelect("SHAP Insights")}
+          />
+          <RadioButton
+            label="Layer Insights"
+            id="layer"
+            name="category"
+            onChange={() => onInsightSelect("Layer Insights")} // Update the state in VisualizationPage
+          />
+          <RadioButton
+            label="Neuron Insights"
+            id="neuron"
+            name="category"
+            onChange={() => onInsightSelect("Neuron Insights")}
+          />
         </div>
       </div>
     </div>

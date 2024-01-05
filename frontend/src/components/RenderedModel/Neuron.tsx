@@ -15,7 +15,7 @@ const Neuron = ({
   glowing,
 }) => {
   // Log the glowing status for debugging
-  console.log(`Neuron ${nodeId} (Layer ${layerIndex}): Glowing = ${glowing}`);
+  //console.log(`Neuron ${nodeId} (Layer ${layerIndex}): Glowing = ${glowing}`);
   // Adjust the color or intensity based on the glowing status
   const color = glowing ? "#98FB98" : getColorForSphere(layerIndex, nodeId); // Example: Yellow for glowing
 

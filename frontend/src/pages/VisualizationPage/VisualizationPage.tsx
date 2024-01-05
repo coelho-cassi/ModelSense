@@ -26,7 +26,7 @@ const VisualizationPage = () => {
   }>({});
   const [selectedInsight, setSelectedInsight] = useState<string | null>(null); // Added state for managing selected insight
   console.log("Selected Insight:", selectedInsight); // TEST LINE
-  const [insightsContent, setInsightsContent] = useState(""); // Added state for managing insights content
+  const [insightsContent, setInsightsContent] = useState<string[]>([]); // Added state for managing insights content
   const [error, setError] = useState<string | null>(null);
 
   const checkGraphStatus = async () => {
@@ -86,9 +86,59 @@ const VisualizationPage = () => {
     neuronGlowInfo,
   };
 
-  const updateInsightsWindow = (layerInfo) => {
-    // Example: Update the state with a description based on the layer
-    setInsightsContent("Description for " + layerInfo);
+  const layerTypeDescriptions = {
+    Conv2D:
+      "This type of layer is like a filter that helps in highlighting features from images, such as edges and shapes.",
+    AveragePooling2D:
+      "These layers help in reducing the size of the image data by averaging the values in a certain area, making the model more manageable.",
+    Flatten:
+      "Imagine taking a multi-layered object and squashing it into a single layer. This layer does just that with data, preparing it for further processing.",
+    Dense:
+      "Think of this as a regular, core building block in a network where each input is connected to each output by a line.",
+    // Add more layer types and descriptions as needed
+  };
+
+  const updateInsightsWindow = (layerType) => {
+    console.log("Received layer type:", layerType);
+    const description =
+      layerTypeDescriptions[layerType] || "Description not available.";
+    const formattedInfo = [
+      `Layer Type: ${layerType}`,
+      `Description: ${description}`,
+    ];
+    setInsightsContent(formattedInfo);
+  };
+
+  const renderInsightsContent = () => {
+    switch (selectedInsight) {
+      case "Layer Insights":
+        return (
+          <InsightsWindow title="Layer Insights" content={insightsContent} />
+        );
+      case "Neuron Insights":
+        return (
+          <InsightsWindow
+            title="Neuron Insights"
+            content={["Neuron-specific insights here"]}
+          />
+        );
+      case "LIME Insights":
+        return (
+          <InsightsWindow
+            title="LIME Insights"
+            content={["LIME-specific insights here"]}
+          />
+        );
+      case "SHAP Insights":
+        return (
+          <InsightsWindow
+            title="SHAP Insights"
+            content={["SHAP-specific insights here"]}
+          />
+        );
+      default:
+        return null; // Or some default content
+    }
   };
 
   return (
@@ -120,9 +170,9 @@ const VisualizationPage = () => {
           />
         )}
       </div>
-      {/* InisightsWindow Container */}
+      {/* InsightsWindow Container */}
       <div className="absolute top-52 left-1/2 ml-5">
-        <InsightsWindow content={insightsContent} />
+        {renderInsightsContent()}
       </div>
       {/* BotBgWindow Container */}
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-1">

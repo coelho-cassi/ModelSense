@@ -84,7 +84,8 @@ const RenderedModel = ({
       // Fetch or determine the layer's information
       const layerType = layerTypes[layerIndex];
       // Call onUpdateInsights with the layer's information
-      onUpdateInsights("Layer type: " + layerType);
+      console.log("Layer type on hover:", layerType); // TEST LINE
+      onUpdateInsights(layerType);
     }
   };
 

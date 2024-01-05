@@ -24,6 +24,9 @@ const VisualizationPage = () => {
   const [neuronGlowInfo, setNeuronGlowInfo] = useState<{
     [key: string]: number[];
   }>({});
+  const [selectedInsight, setSelectedInsight] = useState<string | null>(null); // Added state for managing selected insight
+  console.log("Selected Insight:", selectedInsight); // TEST LINE
+  const [insightsContent, setInsightsContent] = useState(""); // Added state for managing insights content
   const [error, setError] = useState<string | null>(null);
 
   const checkGraphStatus = async () => {
@@ -83,6 +86,11 @@ const VisualizationPage = () => {
     neuronGlowInfo,
   };
 
+  const updateInsightsWindow = (layerInfo) => {
+    // Example: Update the state with a description based on the layer
+    setInsightsContent("Description for " + layerInfo);
+  };
+
   return (
     <div className="relative bg-primary_bg min-h-screen overflow-hidden">
       {/* Background Graphic */}
@@ -105,16 +113,20 @@ const VisualizationPage = () => {
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <GraphViewingWindow {...neuralNetworkProps} />
+          <GraphViewingWindow
+            {...neuralNetworkProps}
+            selectedInsight={selectedInsight}
+            onUpdateInsights={updateInsightsWindow}
+          />
         )}
       </div>
       {/* InisightsWindow Container */}
       <div className="absolute top-52 left-1/2 ml-5">
-        <InsightsWindow></InsightsWindow>
+        <InsightsWindow content={insightsContent} />
       </div>
       {/* BotBgWindow Container */}
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-1">
-        <BotBgWindow></BotBgWindow>
+        <BotBgWindow onInsightSelect={setSelectedInsight}></BotBgWindow>
       </div>
     </div>
   );

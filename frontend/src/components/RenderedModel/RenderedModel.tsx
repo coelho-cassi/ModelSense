@@ -16,8 +16,10 @@ const RenderedModel = ({
   nodes,
   layerTypes,
   neuronGlowInfo,
+  selectedInsight,
+  onUpdateInsights,
 }) => {
-  console.log("neuronGlowInfo:", neuronGlowInfo);
+  //console.log("neuronGlowInfo:", neuronGlowInfo);
   const [selectedLayerIndex, setSelectedLayerIndex] = useState(null);
   const spacing = 0.75;
   const sphereRadius = 0.2;
@@ -32,7 +34,7 @@ const RenderedModel = ({
     const glowing =
       neuronGlowInfo[glowLayerKey] &&
       neuronGlowInfo[glowLayerKey].includes(nodeId);
-    console.log(`Neuron ${nodeId} (Layer ${layerIndex}): Glowing = ${glowing}`);
+    //console.log(`Neuron ${nodeId} (Layer ${layerIndex}): Glowing = ${glowing}`);
     return glowing;
   };
 
@@ -74,6 +76,18 @@ const RenderedModel = ({
     return "#98FB98"; // Regular color
   };
 
+  // Call this function when a layer is hovered
+  const onLayerHover = (layerIndex) => {
+    console.log(`Layer ${layerIndex} is hovered`); // TEST LINE
+    if (selectedInsight === "Layer Insights") {
+      console.log("Updating insights for layer:", layerIndex); // Log when updating insights TEST LINE
+      // Fetch or determine the layer's information
+      const layerType = layerTypes[layerIndex];
+      // Call onUpdateInsights with the layer's information
+      onUpdateInsights("Layer type: " + layerType);
+    }
+  };
+
   return (
     <Canvas
       style={{ width: "100%", height: "100%" }}
@@ -104,6 +118,7 @@ const RenderedModel = ({
                 getColorForLayer={() =>
                   getColorForLayer(layerIndex, layerTypes)
                 }
+                onLayerHover={() => onLayerHover(layerIndex)}
               />
 
               {Array.from({ length: nodeCount }).map((_, nodeIndex) => {

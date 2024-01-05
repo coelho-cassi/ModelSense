@@ -12,6 +12,8 @@ interface GraphViewingWindowProps {
   nodes: number[];
   layerTypes: string[];
   neuronGlowInfo: { [key: string]: number[] };
+  selectedInsight: string | null;
+  onUpdateInsights: (layerInfo: any) => void;
 }
 
 const GraphViewingWindow: React.FC<GraphViewingWindowProps> = ({
@@ -21,6 +23,8 @@ const GraphViewingWindow: React.FC<GraphViewingWindowProps> = ({
   nodes,
   layerTypes,
   neuronGlowInfo,
+  selectedInsight,
+  onUpdateInsights,
 }) => {
   console.log("GraphViewingWindow Props:", { layers, hiddenLayers, nodes }); // Debugging line
   return (
@@ -36,6 +40,8 @@ const GraphViewingWindow: React.FC<GraphViewingWindowProps> = ({
           nodes={nodes}
           layerTypes={layerTypes}
           neuronGlowInfo={neuronGlowInfo}
+          selectedInsight={selectedInsight}
+          onUpdateInsights={onUpdateInsights}
         />
       </div>
     </div>

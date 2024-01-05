@@ -6,13 +6,20 @@ import React from "react";
 
 interface InsightsWindowProps {
   className?: string;
+  content: string;
 }
 
-const InsightsWindow: React.FC<InsightsWindowProps> = ({ className }) => {
+const InsightsWindow: React.FC<InsightsWindowProps> = ({
+  className,
+  content,
+}) => {
   return (
     <div className="relative w-100 h-128">
-      {/* White Rectangle (Bottom) */}
-      <div className="absolute inset-0 bg-secondary_bg rounded-lg opacity-80 shadow"></div>
+      {/* Rectangle (Bottom) */}
+      <div className="absolute inset-0 bg-secondary_bg rounded-lg opacity-80 shadow">
+        {/* Render the content */}
+        {content}
+      </div>
     </div>
   );
 };

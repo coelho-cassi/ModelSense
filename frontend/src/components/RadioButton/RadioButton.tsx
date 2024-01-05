@@ -8,6 +8,7 @@ interface RadioButtonProps {
   id: string;
   name: string;
   className?: string;
+  onChange?: () => void;
 }
 
 const RadioButton: React.FC<RadioButtonProps> = ({
@@ -15,10 +16,11 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   id,
   name,
   className,
+  onChange,
 }) => {
   return (
     <div className={`flex items-center ${className}`}>
-      <input type="radio" id={id} name={name} />
+      <input type="radio" id={id} name={name} onChange={onChange} />{" "}
       <label
         htmlFor={id}
         className="ml-2 font-nunito font-nunito_500 text-primary_text text-m"

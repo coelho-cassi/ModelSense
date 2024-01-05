@@ -5,7 +5,21 @@
 import React from "react";
 import { RoundedBox } from "@react-three/drei";
 
-const Layer = ({ xPos, nodeCount, layerIndex, getColorForLayer }) => {
+interface LayerProps {
+  xPos: number;
+  nodeCount: number;
+  layerIndex: number;
+  getColorForLayer: (layerIndex: number) => string;
+  onLayerHover: () => void; // Update this line
+}
+
+const Layer: React.FC<LayerProps> = ({
+  xPos,
+  nodeCount,
+  layerIndex,
+  getColorForLayer,
+  onLayerHover, // Use the updated prop name
+}) => {
   const layerBaseHeight = 5; // Define the fixed height for each layer here
   const maxNeuronsPerRow = 9;
   const baseRows = 9;
@@ -23,6 +37,7 @@ const Layer = ({ xPos, nodeCount, layerIndex, getColorForLayer }) => {
       args={[5, finalHeight, 0.2]}
       position={[xPos, yPosOffset, 0]}
       rotation={[0, Math.PI / 2, 0]}
+      onPointerOver={onLayerHover}
     >
       <meshPhysicalMaterial
         color={getColorForLayer(layerIndex)}

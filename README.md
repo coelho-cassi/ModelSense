@@ -4,7 +4,7 @@ A web application built with React and Django for uploading and visualizing user
 
 ## Introduction
 
-ModelSense is a powerful tool that allows users to upload their machine learning models and data for interactive visualization. It's built with React for the frontend and Django for the backend, providing a user-friendly experience.
+ModelSense is a powerful tool that allows users to upload their machine learning models and data for interactive visualization. It's built with React and Django, providing a user-friendly experience.
 
 ## Current Features
 
